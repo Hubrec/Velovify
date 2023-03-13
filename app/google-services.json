@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "674599704637",
+    "project_id": "velovify",
+    "storage_bucket": "velovify.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674599704637:android:adb1d2fd5842ed31513254",
+        "android_client_info": {
+          "package_name": "com.guerin.velovify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674599704637-uqu6j90p4sh85surqqs7t9jq204k5g7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC11bhdEEHLH--h7Sfs8gqSq46-_JNBQog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674599704637-uqu6j90p4sh85surqqs7t9jq204k5g7s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,6 +8,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.guerin.velovify.MainActivity
+import com.guerin.velovify.R
 import com.guerin.velovify.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -29,14 +32,21 @@ class HomeFragment : Fragment() {
 
         binding.buttonFavorite.setOnClickListener {
             Toast.makeText(context, "Favorite", Toast.LENGTH_SHORT).show()
+
         }
 
         binding.buttonMap.setOnClickListener {
             Toast.makeText(context, "Map", Toast.LENGTH_SHORT).show()
+            (requireActivity() as? MainActivity)?.also {
+                it.changeFragment(R.id.navigation_map)
+            }
         }
 
         binding.buttonList.setOnClickListener {
             Toast.makeText(context, "List", Toast.LENGTH_SHORT).show()
+            (requireActivity() as? MainActivity)?.also {
+                it.changeFragment(R.id.navigation_list)
+            }
         }
 
         return root

@@ -7,9 +7,10 @@
 
     <ImageView
         android:id="@+id/stationImage"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:src="@color/red_500" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/valid"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -36,7 +36,7 @@ class ListFragment : Fragment() {
 
         binding.editTextSearch.doOnTextChanged { text, start, before, count ->
             val searchText = text.toString()
-            if (searchText.length > 2) {
+            if (searchText.isNotEmpty()) {
                 viewModel.searchStations(searchText)
             } else {
                 viewModel.getAllStations()

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.guerin.velovify.databinding.VelovItemBinding
 import com.guerin.velovify.objects.StationsItem
+import kotlin.random.Random
 
 class StationAdapter : RecyclerView.Adapter<StationAdapter.ViewHolder>() {
 
@@ -29,9 +30,14 @@ class StationAdapter : RecyclerView.Adapter<StationAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(holder.itemView)
-            .load("https://www.ecully.fr/fileadmin/_processed_/4/f/csm_IMG_1481_9812aa1a70.jpg")
-            .into(holder.binding.stationImage)
+        if (stationList[position].totalStands.availabilities.bikes == 0) {
+            holder.binding.stationImage.setImageResource(R.drawable.vide)
+        } else if (stationList[position].totalStands.availabilities.stands == 0) {
+            holder.binding.stationImage.setImageResource(R.drawable.plein)
+        } else {
+            holder.binding.stationImage.setImageResource(R.drawable.valid)
+        }
+
         val stationName = stationList[position].name.split(" - ")
         if (stationName.size > 1) {
             holder.binding.stationName.text = stationName[1]

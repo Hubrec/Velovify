@@ -16,7 +16,8 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:gravity="center_horizontal"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp"
+        android:layout_marginTop="35dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonFavorite"
