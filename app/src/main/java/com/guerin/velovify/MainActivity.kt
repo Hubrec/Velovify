@@ -1,14 +1,23 @@
 package com.guerin.velovify
 
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -120,6 +129,73 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, RegisterActivity::class.java)
                 ActivityResultLauncher.launch(intent)
             }
+        }
+    }
+
+    private fun generateNotification() {
+        val notification = NotificationCompat.Builder(this, "channelId")
+            .setSmallIcon(R.drawable.velovify)
+            .setContentTitle("Velovify")
+            .setContentText("Vous avez une nouvelle notification")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+
+        val notificationManager = NotificationManagerCompat.from(this)
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        notificationManager.notify(1, notification)
+    }
+
+    fun askPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this, POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // C'est ok :)
+                generateNotification()
+            }
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                POST_NOTIFICATIONS
+            ) -> {
+                // Ouvrir les paramètres
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Permission requise")
+                builder.setMessage("To add this feature you really need to turn on notifications")
+                builder.setPositiveButton("Allow them") { dialog, which ->
+                    startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                    })
+                }
+                builder.setNegativeButton("Don't allow them") { dialog, which ->
+                    dialog.dismiss()
+                }
+                builder.show()
+            }
+            else -> {
+                // The registered ActivityResultCallback gets the result of this request
+                requestPermissionLauncher.launch(
+                    POST_NOTIFICATIONS
+                )
+            }
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            generateNotification()
+        } else {
+            Toast.makeText(this, "Permission refusée", Toast.LENGTH_SHORT).show()
         }
     }
 }

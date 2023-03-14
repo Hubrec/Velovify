@@ -9,11 +9,11 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="see_favorite">See favorite</string>
-    <string name="go_to_the_list">Go to the list -></string>
+    <string name="go_to_the_list">Go to the list</string>
     <string name="station_name">Station name</string>
     <string name="velovs_park">Velovs park</string>
     <string name="place_available">Place available</string>
-    <string name="go_to_the_map">Go to the map -></string>
+    <string name="go_to_the_map">Go to the map</string>
     <string name="welcome_to_velovify">Welcome to Velovify !</string>
     <string name="research">Research :</string>
     <string name="research_prompt">Enter your research</string>
@@ -26,4 +26,12 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="notifications">Notifications</string>
+    <string name="notification_title">Recieve notification of favorites stations</string>
+    <string name="Timestamp7h">7:00 :</string>
+    <string name="Timestamp8h">8:00 :</string>
+    <string name="Timestamp10h">10:00 :</string>
+    <string name="Timestamp12h">12:00 :</string>
+    <string name="Timestamp14h">14:00 :</string>
+    <string name="Timestamp18h">18:00 :</string>
 </resources>
