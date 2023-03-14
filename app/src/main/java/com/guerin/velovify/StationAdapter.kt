@@ -99,6 +99,11 @@ class StationAdapter : RecyclerView.Adapter<StationAdapter.ViewHolder>() {
         holder.binding.buttonAddToFav.setOnClickListener {
             addToFavorite(holder.binding.stationName.text)
         }
+
+        holder.binding.root.setOnLongClickListener() {
+            addToFavorite(holder.binding.stationName.text)
+            true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -106,7 +111,11 @@ class StationAdapter : RecyclerView.Adapter<StationAdapter.ViewHolder>() {
     }
 
     fun addToFavorite(stationName: CharSequence) {
-        val station = stationList.find { it.name.contains(stationName) }
+        var name = stationName
+        if ("..." in stationName) {
+            name = stationName.substring(0, stationName.length - 4)
+        }
+        val station = stationList.find { it.name.contains(name) }
         station?.favorite = !station?.favorite!!
 
         val file = File("/data/data/com.guerin.velovify/files/favorites.txt")
