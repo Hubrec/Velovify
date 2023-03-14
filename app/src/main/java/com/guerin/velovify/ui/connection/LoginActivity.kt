@@ -1,5 +1,6 @@
 package com.guerin.velovify.ui.connection
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
@@ -56,7 +57,8 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            intent.putExtra("user", auth.currentUser)
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }

@@ -7,4 +7,4 @@ data class Availabilities(
     val electricalRemovableBatteryBikes: Int,
     val mechanicalBikes: Int,
     val stands: Int
-)
+): java.io.Serializable {}

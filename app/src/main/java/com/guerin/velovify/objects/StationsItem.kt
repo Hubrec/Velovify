@@ -15,5 +15,6 @@ data class StationsItem(
     val position: Position,
     val shape: Any,
     val status: String,
-    val totalStands: TotalStands
-)
+    val totalStands: TotalStands,
+    var favorite: Boolean = false
+): java.io.Serializable {}

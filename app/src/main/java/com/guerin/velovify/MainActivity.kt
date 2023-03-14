@@ -1,9 +1,12 @@
 package com.guerin.velovify
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -18,11 +21,20 @@ import com.guerin.velovify.databinding.ActivityMainBinding
 import com.guerin.velovify.ui.connection.LoginActivity
 import com.guerin.velovify.ui.connection.RegisterActivity
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private var user: FirebaseUser? = null
+
+    val ActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val usr = result.data?.getSerializableExtra("user")
+            Log.i("MainActivity", "RESULT_OK")
+            updateUI(user)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,15 +111,14 @@ class MainActivity : AppCompatActivity() {
             binding.buttonSignin.visibility = View.VISIBLE
             binding.buttonSignin.setOnClickListener{
                 val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                updateUI(auth.currentUser)
+                ActivityResultLauncher.launch(intent)
+
             }
 
             binding.buttonRegister.text = "Register"
             binding.buttonRegister.setOnClickListener {
                 val intent = Intent(this, RegisterActivity::class.java)
-                startActivity(intent)
-                updateUI(auth.currentUser)
+                ActivityResultLauncher.launch(intent)
             }
         }
     }
