@@ -9,11 +9,11 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="see_favorite">See favorite</string>
-    <string name="go_to_the_list">Go to the list</string>
+    <string name="go_to_the_list">Go to the list -></string>
     <string name="station_name">Station name</string>
     <string name="velovs_park">Velovs park</string>
     <string name="place_available">Place available</string>
-    <string name="go_to_the_map">Go to the map</string>
+    <string name="go_to_the_map">Go to the map -></string>
     <string name="welcome_to_velovify">Welcome to Velovify !</string>
     <string name="research">Research :</string>
     <string name="research_prompt">Enter your research</string>

@@ -20,17 +20,6 @@
         android:layout_marginTop="35dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonFavorite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/see_favorite"
-        android:backgroundTint="@color/red_600"
-        android:textColor="@color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        app:cornerRadius="6dp"/>
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

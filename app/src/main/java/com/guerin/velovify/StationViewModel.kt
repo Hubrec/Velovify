@@ -38,5 +38,9 @@ class StationViewModel : ViewModel() {
         }
     }
 
+    fun getFavoriteStations() {
+        stationLiveData.value = stationLiveData.value?.filter { it.favorite }
+    }
+
     fun observeStationsLiveData() = stationLiveData
 }

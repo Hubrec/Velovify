@@ -30,11 +30,6 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.buttonFavorite.setOnClickListener {
-            Toast.makeText(context, "Favorite", Toast.LENGTH_SHORT).show()
-
-        }
-
         binding.buttonMap.setOnClickListener {
             Toast.makeText(context, "Map", Toast.LENGTH_SHORT).show()
             (requireActivity() as? MainActivity)?.also {

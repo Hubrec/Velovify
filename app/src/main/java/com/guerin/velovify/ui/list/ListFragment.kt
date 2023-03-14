@@ -1,6 +1,7 @@
 package com.guerin.velovify.ui.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,12 +35,19 @@ class ListFragment : Fragment() {
 
         prepareRecyclerView()
 
-        binding.editTextSearch.doOnTextChanged { text, start, before, count ->
-            val searchText = text.toString()
-            if (searchText.isNotEmpty()) {
-                viewModel.searchStations(searchText)
-            } else {
-                viewModel.getAllStations()
+        binding.editTextSearch.doOnTextChanged { text, _, _, _ ->
+            for (i in 1..2) {
+                val searchText = text.toString()
+                if (searchText != "") {
+                    if (searchText.uppercase() == "FAV" || searchText.uppercase() == "FAVORITE") {
+                        viewModel.getFavoriteStations()
+                        Log.i("ListFragment", "FAVORITE")
+                    } else {
+                        viewModel.searchStations(searchText)
+                    }
+                } else {
+                    viewModel.getAllStations()
+                }
             }
         }
 
