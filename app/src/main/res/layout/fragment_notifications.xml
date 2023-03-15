@@ -87,7 +87,7 @@
             <ToggleButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/toggleButton9h"
+                android:id="@+id/toggleButton10h"
                 android:layout_marginStart="15dp" />
 
         </LinearLayout>
@@ -110,7 +110,7 @@
             <ToggleButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/toggleButton10h"
+                android:id="@+id/toggleButton12h"
                 android:layout_marginStart="15dp" />
 
         </LinearLayout>
@@ -133,7 +133,7 @@
             <ToggleButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/toggleButton11h"
+                android:id="@+id/toggleButton14h"
                 android:layout_marginStart="15dp" />
 
         </LinearLayout>
@@ -157,7 +157,7 @@
             <ToggleButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/toggleButton12h"
+                android:id="@+id/toggleButton18h"
                 android:layout_marginStart="15dp" />
 
         </LinearLayout>

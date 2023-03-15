@@ -54,6 +54,7 @@ class ListFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[StationViewModel::class.java]
         viewModel.getAllStations()
+        Log.i("MainActivity", "viewModel state : " + viewModel.observeStationsLiveData().value)
         viewModel.observeStationsLiveData().observe(this, Observer { stationList ->
             stationAdapter.setStationList(stationList)
         })

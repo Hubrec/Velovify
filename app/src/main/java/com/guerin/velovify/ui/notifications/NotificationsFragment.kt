@@ -1,6 +1,7 @@
 package com.guerin.velovify.ui.notifications
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,17 +30,46 @@ class NotificationsFragment : Fragment() {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val button7: Button = binding.toggleButton7h
+        val button8: Button = binding.toggleButton8h
+        val button10: Button = binding.toggleButton10h
+        val button12: Button = binding.toggleButton12h
+        val button14: Button = binding.toggleButton14h
+        val button18: Button = binding.toggleButton18h
 
-//        notificationButton.setOnClickListener {
-//            textView.text = "Notifications button"
-//            (requireActivity() as? MainActivity)?.also {
-//                it.askPermission()
-//            }
-//        }
-//
-//        textView.text = "Notifications fragment"
+        button7.setOnClickListener {
+            funcTrigger(it)
+        }
+
+        button8.setOnClickListener {
+            funcTrigger(it)
+        }
+
+        button10.setOnClickListener {
+            funcTrigger(it)
+        }
+
+        button12.setOnClickListener {
+            funcTrigger(it)
+        }
+
+        button14.setOnClickListener {
+            funcTrigger(it)
+
+        }
+
+        button18.setOnClickListener {
+            funcTrigger(it)
+        }
 
         return root
+    }
+
+    fun funcTrigger(view: View) {
+        Log.i("NotificationsFragment", "Button is activated")
+        (requireActivity() as? MainActivity)?.also {
+            it.askPermission()
+        }
     }
 
     override fun onDestroyView() {

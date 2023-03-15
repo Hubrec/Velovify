@@ -1,10 +1,12 @@
 package com.guerin.velovify
 
 import android.Manifest.permission.POST_NOTIFICATIONS
-import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -29,18 +31,25 @@ import com.google.firebase.ktx.Firebase
 import com.guerin.velovify.databinding.ActivityMainBinding
 import com.guerin.velovify.ui.connection.LoginActivity
 import com.guerin.velovify.ui.connection.RegisterActivity
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
+    private val CHANNEL_ID = "channel_id_01"
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private var user: FirebaseUser? = null
+    private lateinit var viewModel: StationViewModel
 
-    val ActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    val activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val usr = result.data?.getSerializableExtra("user")
             Log.i("MainActivity", "RESULT_OK")
+            user = auth.currentUser
             updateUI(user)
         }
     }
@@ -49,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        createChannel()
 
         auth = Firebase.auth
         user = auth.currentUser
@@ -120,26 +131,42 @@ class MainActivity : AppCompatActivity() {
             binding.buttonSignin.visibility = View.VISIBLE
             binding.buttonSignin.setOnClickListener{
                 val intent = Intent(this, LoginActivity::class.java)
-                ActivityResultLauncher.launch(intent)
+                activityResultLauncher.launch(intent)
 
             }
 
             binding.buttonRegister.text = "Register"
             binding.buttonRegister.setOnClickListener {
                 val intent = Intent(this, RegisterActivity::class.java)
-                ActivityResultLauncher.launch(intent)
+                activityResultLauncher.launch(intent)
             }
         }
     }
 
-    private fun generateNotification() {
-        val notification = NotificationCompat.Builder(this, "channelId")
+    private fun createChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+            mChannel.description = descriptionText
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
+    }
+    fun generateNotification() {
+
+        createChannel()
+
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.velovify)
             .setContentTitle("Velovify")
-            .setContentText("Vous avez une nouvelle notification")
+            .setContentText("")
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText("Fonctionnalié en développement"))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
-
 
         val notificationManager = NotificationManagerCompat.from(this)
 
@@ -152,6 +179,7 @@ class MainActivity : AppCompatActivity() {
         }
         notificationManager.notify(1, notification)
     }
+
 
     fun askPermission() {
         when {
@@ -169,13 +197,13 @@ class MainActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Permission requise")
                 builder.setMessage("To add this feature you really need to turn on notifications")
-                builder.setPositiveButton("Allow them") { dialog, which ->
+                builder.setPositiveButton("Allow them") { _, _ ->
                     startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
                     })
                 }
-                builder.setNegativeButton("Don't allow them") { dialog, which ->
+                builder.setNegativeButton("Don't allow them") { dialog, _ ->
                     dialog.dismiss()
                 }
                 builder.show()

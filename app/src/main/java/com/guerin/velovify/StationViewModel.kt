@@ -20,7 +20,6 @@ class StationViewModel : ViewModel() {
             ) {
                 if (response.isSuccessful) {
                     stationLiveData.value = response.body()
-//                    Log.i("StationViewModel", "onResponse: ${response.body()}")
                 }
                 else { return }
             }

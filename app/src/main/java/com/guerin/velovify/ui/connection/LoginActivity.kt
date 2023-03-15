@@ -44,22 +44,17 @@ class LoginActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             auth.signInWithEmailAndPassword(username.text.toString().trim(), password.text.toString().trim())
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "signInWithEmail:success")
-                        Toast.makeText(baseContext, "You are now connected",
-                            Toast.LENGTH_SHORT).show()
-                        val user = auth.currentUser
-                    } else {
-                        Log.w(TAG, "signInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Connection failed",
-                            Toast.LENGTH_SHORT).show()
-                    }
-                }
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("user", auth.currentUser)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+            .addOnSuccessListener {
+                Toast.makeText(baseContext, "You are now connected",
+                    Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("user", it.user)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
+            .addOnFailureListener {
+                Snackbar.make(binding.root, "Error: ${it.message}", Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 }

@@ -1,11 +1,13 @@
 package com.guerin.velovify.ui.connection
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.guerin.velovify.MainActivity
 import com.guerin.velovify.databinding.ActivityRegisterBinding
@@ -42,17 +44,17 @@ class RegisterActivity : AppCompatActivity() {
 
         register.setOnClickListener {
             auth.createUserWithEmailAndPassword(username.text.toString().trim(), password.text.toString().trim())
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "signInWithEmail:success")
-                        Toast.makeText(baseContext, "Account created",
-                            Toast.LENGTH_SHORT).show()
-                        val user = auth.currentUser
-                    } else {
-                        Log.w(TAG, "signInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Email already taken",
-                            Toast.LENGTH_SHORT).show()
-                    }
+                .addOnSuccessListener {
+                    Log.d(TAG, "signInWithEmail:success")
+                    Toast.makeText(baseContext, "Account created",
+                        Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("user", it.user)
+                    setResult(Activity.RESULT_OK, intent)
+                    finish()
+                }
+                .addOnFailureListener {
+                    Snackbar.make(binding.root, "Error: ${it.message}", Snackbar.LENGTH_SHORT).show()
                 }
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
